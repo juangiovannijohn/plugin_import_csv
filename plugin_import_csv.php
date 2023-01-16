@@ -2,10 +2,10 @@
 /*
 Plugin Name: Import CSV
 Plugin URI: https://githun.com/import-csv
-Description: Este plugin permite importar un archivo CSV y crear nuevos post types
-Version: 1.0
+Description: Este plugin permite importar un archivo CSV y crear nuevos post types.
+Version: 1.1.0
 Author: Juan Rodriguez
-Author URI: https://tuweb.com
+Author URI: https://iCornio.com
 License: GPL2
 */
 include('./includes/example_CSV.png');
