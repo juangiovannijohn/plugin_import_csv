@@ -145,6 +145,7 @@ function csv_importer_page()
                                 $string = $data[1];
                                 $string = trim($string);
                                 $CF_1 = substr($string, -4);
+								$CF_1 = substr_replace($CF_1, ".", 1, 0);
                                 //Zona, string sin limites
                                 $CF_2 = $data[2];
 
