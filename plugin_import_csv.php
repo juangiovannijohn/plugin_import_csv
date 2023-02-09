@@ -8,7 +8,8 @@ Author: Juan Rodriguez
 Author URI: https://iCornio.com
 License: GPL2
 */
-include('./includes/example_CSV.png');
+include_once('agregar_img.php');
+
 
 // Create a top-level menu item in the dashboard
 function csv_importer_menu()
@@ -75,6 +76,18 @@ function csv_importer_page()
             </br>
             <input type="submit" name="submit" value="Cargar">
             </form>
+            <hr>
+            <form method="post">
+                <input type="hidden">
+                <button type="submit" name="ejecutar" >Cargar imágenes</button>
+            </form>
+                <div>
+                    <?php 
+                    if (isset($_POST['ejecutar'])) {
+                        echo '<p> Se ejecuta funcion </p>';
+                        echo agregar_img_por_zona(); 
+                    }?>
+                </div>
         </div>
         <div class="col col_img">
             <h3>Ejemplo del archivo</h3>
