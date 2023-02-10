@@ -70,7 +70,9 @@ function csv_importer_page()
             <label for="cf_1">Ingrese el meta_key del primer Custom Field</label></br>
             <input id="cf_1" name="cf_1" type="text" value="tecnico_dni"> SISCARD, Si quiere cargar técnicos debe colocar: tecnico_dni</br>
             <label for="cf_2">Ingrese el meta_key del segundo Custom Field</label></br>
-            <input id="cf_2" name="cf_2" type="text" value="tecnico_zona"> SISCARD, Si quiere cargar técnicos debe colocar: tecnico_zona</br>    
+            <input id="cf_2" name="cf_2" type="text" value="tecnico_zona"> SISCARD, Si quiere cargar técnicos debe colocar: tecnico_zona</br> 
+            <label for="cf_3">Ingrese el meta_key del segundo Custom Field</label></br>
+            <input id="cf_3" name="cf_3" type="text" value="zona_id"> SISCARD, Si quiere cargar técnicos debe colocar: zona_id</br>   
             <label for="file">Subir un Archivo .csv</label></br>
             <input type="file" id="file" name="file"></br>
             </br>
@@ -107,9 +109,10 @@ function csv_importer_page()
             'numberposts' => -1
         );
         $posts = get_posts( $args );
+        //se eliminan todos los tecnicos cargados previamente
         foreach ( $posts as $post ) {
             wp_delete_post( $post->ID, true );
-        }
+        } 
 
         // Rest of the code for handling the CSV file and creating new posts
         $file = $_FILES['file'];
@@ -120,8 +123,9 @@ function csv_importer_page()
         $file_ext = explode('.', $file_name);
         $file_ext = strtolower(end($file_ext));
         $custom_post_type = $_POST["cpt_slug"];
-        $meta_key_1 = $_POST["cf_1"];
-        $meta_key_2 = $_POST["cf_2"];
+        $meta_key_1 = $_POST["cf_1"]; //tecnico_dni
+        $meta_key_2 = $_POST["cf_2"]; //tecnico_zona
+        $meta_key_3 = $_POST["cf_3"]; //zona_id
 
 
         $allowed = array('csv');
@@ -152,16 +156,17 @@ function csv_importer_page()
 
                         while (($data = fgetcsv($handle, 1000, $delimiter)) !== false) {
                             if ($row > 1) {
+                                $CF_3 = $data[0]; //primera columna del EXCEL
                                 //CPT debe ser exacto a lo grabado en la BD
-                                $CPT_nombre = $data[0];
+                                $CPT_nombre = $data[1]; //SEGUNDA columna del EXCEL
                                 //DNI recortado para los ultimos 4 digitos
-                                $string = $data[1];
+                                $string = $data[2];  //TERCERA columna del EXCEL
                                 $string = trim($string);
                                 $CF_1 = substr($string, -4);
 								$CF_1 = substr_replace($CF_1, ".", 1, 0);
                                 //Zona, string sin limites
-                                $CF_2 = $data[2];
-
+                                $CF_2 = $data[3]; //CUARTA columna del EXCEL
+                                
                                 $post = array(
                                     'post_title'    => $CPT_nombre,
                                     'post_type'     => $custom_post_type,
@@ -173,15 +178,20 @@ function csv_importer_page()
                                     //Se valida si los custom fields existen o no. para crearlos o actualizarlos
                                     $tecnico_dni = get_post_meta( $post_id, $meta_key_1, true );
                                     $tecnico_zona = get_post_meta( $post_id, $meta_key_2, true );
-                                    if ( ! empty( $tecnico_dni ) && ! empty( $tecnico_zona )  ) {
+                                    $zona_id = get_post_meta( $post_id, $meta_key_3, true );
+                                    if ( ! empty( $tecnico_dni ) && ! empty( $tecnico_zona ) && ! empty( $zona_id )  ) {
                                         // El meta key existe para este post
-                                        update_post_meta($post_id, $meta_key_1, $CF_1); //se agrega un valor al meta_value
-                                        update_post_meta($post_id, $meta_key_2, $CF_2); //se agrega un valor al meta_value
+                                        // Se actualizan los datos
+                                        update_post_meta($post_id, $meta_key_1, $CF_1); //dni
+                                        update_post_meta($post_id, $meta_key_2, $CF_2); //zona
+                                        update_post_meta($post_id, $meta_key_3, $CF_3); //zona_id
                                         $count++;
                                     } else {
                                         // El meta key no existe para este post
-                                        add_post_meta($post_id, $meta_key_1, $CF_1);
-                                        add_post_meta($post_id, $meta_key_2, $CF_2);
+                                        // Se crean y se guardan datos
+                                        add_post_meta($post_id, $meta_key_1, $CF_1); //dni
+                                        add_post_meta($post_id, $meta_key_2, $CF_2); //zona
+                                        add_post_meta($post_id, $meta_key_3, $CF_3); //zona_id
                                         $count++;
                                     }  
                                 }
