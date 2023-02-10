@@ -1,7 +1,4 @@
 <?php
-function hola(){
-  echo 'hoola';
-}
 function agregar_img_por_zona()
 {
   $args = array(
