@@ -42,3 +42,11 @@ Asignacion de imagenes a los tecnicos
 
 
 IMPORTANTE: El nombre del archivo debe ser la zona_id del técnico. Ejemplo: El técnico Juan Perez de zona_id= '1234567', su archivo de imagen se debe llamar 1234567.png
+
+
+First Term
+: This is the definition of the first term.
+
+Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.
