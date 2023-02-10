@@ -70,7 +70,7 @@ function csv_importer_page()
             <label for="cf_1">Ingrese el meta_key del primer Custom Field</label></br>
             <input id="cf_1" name="cf_1" type="text" value="tecnico_dni"> SISCARD, Si quiere cargar técnicos debe colocar: tecnico_dni</br>
             <label for="cf_2">Ingrese el meta_key del segundo Custom Field</label></br>
-            <input id="cf_2" name="cf_2" type="text" value="tecnico_zona"> SISCARD, Si quiere cargar técnicos debe colocar: tecnico_zona</br>
+            <input id="cf_2" name="cf_2" type="text" value="tecnico_zona"> SISCARD, Si quiere cargar técnicos debe colocar: tecnico_zona</br>    
             <label for="file">Subir un Archivo .csv</label></br>
             <input type="file" id="file" name="file"></br>
             </br>
@@ -170,9 +170,20 @@ function csv_importer_page()
 
                                 $post_id = wp_insert_post($post);
                                 if ($post_id) {
-                                    add_post_meta($post_id, $meta_key_1, $CF_1);
-                                    add_post_meta($post_id, $meta_key_2, $CF_2);
-                                    $count++;
+                                    //Se valida si los custom fields existen o no. para crearlos o actualizarlos
+                                    $tecnico_dni = get_post_meta( $post_id, $meta_key_1, true );
+                                    $tecnico_zona = get_post_meta( $post_id, $meta_key_2, true );
+                                    if ( ! empty( $tecnico_dni ) && ! empty( $tecnico_zona )  ) {
+                                        // El meta key existe para este post
+                                        update_post_meta($post_id, $meta_key_1, $CF_1); //se agrega un valor al meta_value
+                                        update_post_meta($post_id, $meta_key_2, $CF_2); //se agrega un valor al meta_value
+                                        $count++;
+                                    } else {
+                                        // El meta key no existe para este post
+                                        add_post_meta($post_id, $meta_key_1, $CF_1);
+                                        add_post_meta($post_id, $meta_key_2, $CF_2);
+                                        $count++;
+                                    }  
                                 }
 
                             }
