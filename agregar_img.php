@@ -13,28 +13,31 @@ function agregar_img_por_zona()
   );
   $query = new WP_Query($args);
   $attachments = array();
-  if ($query->have_posts()) {
-    while ($query->have_posts()) {
-      $query->the_post();
+    if ($query->have_posts()) {
+      while ($query->have_posts()) {
+        $query->the_post();
 
-      /*
-      * Crea un array del estilo
-      * $attachments = [
-      "7630001" => 124,
-      "7540003" => 123
-      ] 
-      */
-      $post_id = get_the_ID();
-      $file = get_post_meta($post_id, '_wp_attached_file', true);
-      $zona_id = substr($file, 0, 7);
-      $attachments[$zona_id] = $post_id;
+        /*
+        * Crea un array del estilo
+        * $attachments = [
+        "7630001" => 124,
+        "7540003" => 123
+        ] 
+        */
+        $post_id = get_the_ID();
+        $file = get_post_meta($post_id, '_wp_attached_file', true);
+        $zona_id = substr($file, 0, 7);
+        $attachments[$zona_id] = $post_id;
+      }
+      wp_reset_postdata();
+    }else{
+      $attachments['noimagenes']= 'No existe Imagenes';
     }
-    wp_reset_postdata();
-  }
+
   //-----------PRIMER BUCLE QUE BUSCA LAS IMAGENES------------
 
 
-  $tecnicos = [];
+  $tecnicos = array();
   $args_tec = array(
     'post_type' => 'tecnicos',
     'post_status' => 'publish',
@@ -59,6 +62,13 @@ function agregar_img_por_zona()
     }
     wp_reset_postdata();
   }
-  return 'Nro de técnicos actualizados: ' . $count;
+  else{
+    $tecnicos['notecnicos']= 'No existen técnicos';
+  }
+  return '<div class="updated notice is-dismissible"> <p>Imagenes Cargadas correctamente!</p> 
+  <h3> Cantidad de imagenes=' . $count . '</h3>
+  <p>$attachments = '.print_r($attachments).'</p>
+  <p>$attachments = '.print_r($tecnicos).'</p>
+  </div>';
 }
 ?>
