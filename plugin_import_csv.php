@@ -8,6 +8,9 @@ Author: iCornio Tech (Juan Giovanni John)
 Author URI: https://iCornio.com
 License: GPL2
 */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 include_once('agregar_img.php');
 
 
