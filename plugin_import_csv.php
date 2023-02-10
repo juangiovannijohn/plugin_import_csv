@@ -3,8 +3,8 @@
 Plugin Name: Import CSV
 Plugin URI: https://githun.com/import-csv
 Description: Este plugin permite importar un archivo CSV y crear nuevos post types.
-Version: 1.1.0
-Author: Juan Rodriguez
+Version: 1.2.0
+Author: iCornio Tech (Juan Giovanni John)
 Author URI: https://iCornio.com
 License: GPL2
 */
@@ -66,27 +66,28 @@ function csv_importer_page()
             <h3>Formulario</h3>
             <form method="post" enctype="multipart/form-data">
             <label for="cpt">Ingrese el slug del Custom Post type a cargar</label></br>
-            <input id="cpt" name="cpt_slug" type="text" value="tecnicos" > SISCARD, Si quiere cargar técnicos debe colocar: tecnicos</br>
+            <input class="regular-text" id="cpt" name="cpt_slug" type="text" value="tecnicos" > SISCARD, Si quiere cargar técnicos debe colocar: tecnicos</br>
             <label for="cf_1">Ingrese el meta_key del primer Custom Field</label></br>
-            <input id="cf_1" name="cf_1" type="text" value="tecnico_dni"> SISCARD, Si quiere cargar técnicos debe colocar: tecnico_dni</br>
+            <input class="regular-text" id="cf_1" name="cf_1" type="text" value="tecnico_dni"> SISCARD, Si quiere cargar técnicos debe colocar: tecnico_dni</br>
             <label for="cf_2">Ingrese el meta_key del segundo Custom Field</label></br>
-            <input id="cf_2" name="cf_2" type="text" value="tecnico_zona"> SISCARD, Si quiere cargar técnicos debe colocar: tecnico_zona</br> 
+            <input class="regular-text" id="cf_2" name="cf_2" type="text" value="tecnico_zona"> SISCARD, Si quiere cargar técnicos debe colocar: tecnico_zona</br> 
             <label for="cf_3">Ingrese el meta_key del segundo Custom Field</label></br>
-            <input id="cf_3" name="cf_3" type="text" value="zona_id"> SISCARD, Si quiere cargar técnicos debe colocar: zona_id</br>   
-            <label for="file">Subir un Archivo .csv</label></br>
-            <input type="file" id="file" name="file"></br>
+            <input class="regular-text" id="cf_3" name="cf_3" type="text" value="zona_id"> SISCARD, Si quiere cargar técnicos debe colocar: zona_id</br>   
+            <div class="wp-upload-form">
+                <label for="file">Subir un Archivo .csv</label></br>
+                <input type="file" id="file" name="file"></br>
+            </div>
             </br>
-            <input type="submit" name="submit" value="Cargar">
+            <input  class="button button-primary" type="submit" name="submit" value="Cargar">
             </form>
-            <hr>
+            <hr style="margin: 10px 0px;">
             <form method="post">
                 <input type="hidden">
-                <button type="submit" name="ejecutar" >Cargar imágenes</button>
+                <button class="button button-primary" type="submit" name="ejecutar" >Cargar imágenes</button>
             </form>
                 <div>
                     <?php 
                     if (isset($_POST['ejecutar'])) {
-                        echo '<p> Se ejecuta funcion </p>';
                         echo agregar_img_por_zona(); 
                     }?>
                 </div>

@@ -65,10 +65,9 @@ function agregar_img_por_zona()
   else{
     $tecnicos['notecnicos']= 'No existen técnicos';
   }
-  return '<div class="updated notice is-dismissible"> <p>Imagenes Cargadas correctamente!</p> 
+  $return = '<div class="updated notice is-dismissible"> <p>Imagenes Cargadas correctamente!</p> 
   <h3> Cantidad de imagenes=' . $count . '</h3>
-  <p>$attachments = '.print_r($attachments).'</p>
-  <p>$attachments = '.print_r($tecnicos).'</p>
   </div>';
+  return $return;
 }
 ?>
