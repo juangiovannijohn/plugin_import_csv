@@ -2,6 +2,11 @@
 Plugin desarrollado para leer un .csv y que guarde en la DB de Wordpress como post los datos que estan dentro del .csv
 
 ## Primer paso
+-En Ajustes/Multimedia -> Desseleccionar la casilla que dice "Organizar mis ficheros subidos en carpetas basadas por mes y año"
+
+```
+echo 'hola mundo';
+```
 Se debe ingresar en el formulario el slug del CTP y los meta_key que se desea cargar. Tener en cuenta que ésta version del plugin acepta unicamente 2 meta_keys de tipo string.
 
 ## Segundo paso

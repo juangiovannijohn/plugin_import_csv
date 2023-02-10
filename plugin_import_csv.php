@@ -50,11 +50,16 @@ function csv_importer_page()
     flex-direction: column;
     flex-wrap: nowrap;
 }
-.col_img img{
-    padding: 2rem;
-    width: 400px;
+.col_img{
+    padding: 0px 2rem;
+    width: 100%;
+}
+.img_example{
+    width: 100%;
+    max-width: 600px;
     height: auto;
-    border-radius: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px -6px rgb(0 0 0 / 80%)
 }
 </style>
 <div style="min-height: 100vh;" class="wrap">
@@ -81,7 +86,7 @@ function csv_importer_page()
             </br>
             <input  class="button button-primary" type="submit" name="submit" value="Cargar técnicos">
             </form>
-        <hr style="margin: 10px 0px;">
+            <hr style="margin: 10px 0px;">
             <div>
                 <h3>2° Asignar foto a cada técnico</h3>
                 <form method="post">
@@ -98,7 +103,7 @@ function csv_importer_page()
         </div>
         <div class="col col_img">
             <h3>Ejemplo del archivo</h3>
-            <img src="<?php echo plugin_dir_url( __FILE__ ) . 'includes/example_CSV.png' ?>" alt="ejemplo">
+            <img class="img_example" src="<?php echo plugin_dir_url( __FILE__ ) . 'includes/example_CSV.png' ?>" alt="ejemplo">
         </div>
     </div>
 </div>
