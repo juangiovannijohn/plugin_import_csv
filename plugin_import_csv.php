@@ -63,7 +63,7 @@ function csv_importer_page()
     <hr>
     <div class="container">
         <div class="col col_form">
-            <h3>Formulario</h3>
+            <h3>1° Subir archivo y cargar técnicos</h3>
             <form method="post" enctype="multipart/form-data">
             <label for="cpt">Ingrese el slug del Custom Post type a cargar</label></br>
             <input class="regular-text" id="cpt" name="cpt_slug" type="text" value="tecnicos" > SISCARD, Si quiere cargar técnicos debe colocar: tecnicos</br>
@@ -80,17 +80,20 @@ function csv_importer_page()
             </br>
             <input  class="button button-primary" type="submit" name="submit" value="Cargar">
             </form>
-            <hr style="margin: 10px 0px;">
-            <form method="post">
-                <input type="hidden">
-                <button class="button button-primary" type="submit" name="ejecutar" >Cargar imágenes</button>
-            </form>
-                <div>
-                    <?php 
-                    if (isset($_POST['ejecutar'])) {
-                        echo agregar_img_por_zona(); 
-                    }?>
-                </div>
+        <hr style="margin: 10px 0px;">
+            <div>
+                <h3>2° Asignar foto a cada técnico</h3>
+                <form method="post">
+                    <input type="hidden">
+                    <button class="button button-primary" type="submit" name="ejecutar" >Cargar imágenes</button>
+                </form>
+                    <div>
+                        <?php 
+                        if (isset($_POST['ejecutar'])) {
+                            echo agregar_img_por_zona(); 
+                        }?>
+                    </div>
+            </div>
         </div>
         <div class="col col_img">
             <h3>Ejemplo del archivo</h3>
