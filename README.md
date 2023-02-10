@@ -4,10 +4,7 @@ Plugin desarrollado para leer un .csv y que guarde en la DB de Wordpress como po
 
 ![](https://siscard.com/wp-content/uploads/csv_importer_dashboard.png)
 
-> Dashboard.
-
-**Tabla de Contenido**
-[TOCM]
+------------
 
 ## Utilización
 Ingresar a la herramienta desde la barra lateral izquierda clicando en "CSV Importer".
@@ -16,7 +13,7 @@ Ingresar a la herramienta desde la barra lateral izquierda clicando en "CSV Impo
 
 > Ingresar a la herramienta.
 
-### Preparacion del CSV
+### 1° Preparacion del CSV
 El formato y el orden de las columnas del archivo deben ser exactamente las mencionadas.
 
 ![](https://siscard.com/wp-content/uploads/example_CSV.png)
@@ -33,7 +30,7 @@ El formato y el orden de las columnas del archivo deben ser exactamente las menc
 2. Guardar Como >  formato del archivo: CSV UTF-8 (delimitado por comas).
 3. Listo !
 
-### Preparacion imágenes de los técnicos
+### 2° Preparacion imágenes de los técnicos
 
 El sitio web actual permite subir imagenes con un tamaño maximo de 2Mb. Por ende se deben redimensionar para no superar dicho limite. Un sitio gratuito que puede utilizar es el de [Photopea](https://www.photopea.com/)
 1. Controlar el tamaño de las imágenes. 
@@ -41,21 +38,20 @@ El sitio web actual permite subir imagenes con un tamaño maximo de 2Mb. Por end
 3. Formatos admitidos: .png .jpg
 4. Listo !
 
-### Cargar Técnicos
+### 3° Cargar Técnicos
 
 Completado del formulario
 1. Se debe ingresar en el formulario el slug del CTP. Por defecto viene pre-rellenado con "tecnicos".
 2. Los meta_key por defecto vienen pre-rellenados con: "tecnico_dni", "tecnico_zona" y "zona_id".
 3. Cargar el archivo .csv, en caso de enviar otro tipo de archivo da error  y los datos pueden estar separados por ; o , 
 
-NOTA:Tener en cuenta que al pasar de un archivo Excel a CSV se debe seleccionar la opcion CSV UTF-8 (delimitado por comas).
 
 ![](https://siscard.com/wp-content/uploads/csv_importer_msj_success_tecnicos.png)
 
 > El plugin debe mostrar un mensaje de success con la cantidad de técnicos cargados.
 
 
-### Asignacion de fotos a cada Técnico
+### 4° Asignacion de fotos a cada Técnico
 
 1. Subir imagenes
 	1. En el menu Multimedia/Agregar Nueva, subir todas las imágenes de los técnicos.
