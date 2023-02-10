@@ -59,8 +59,9 @@ function csv_importer_page()
 </style>
 <div style="min-height: 100vh;" class="wrap">
 <h1>CSV Importer</h1>
+<br>
 <div> Plugin desarrollado por <a href="https://icornio.com" target="_blank">iCornio Tech</a> </div>
-    <hr>
+    <hr style="margin: 10px 0px;">
     <div class="container">
         <div class="col col_form">
             <h3>1° Subir archivo y cargar técnicos</h3>
@@ -78,7 +79,7 @@ function csv_importer_page()
                 <input type="file" id="file" name="file"></br>
             </div>
             </br>
-            <input  class="button button-primary" type="submit" name="submit" value="Cargar">
+            <input  class="button button-primary" type="submit" name="submit" value="Cargar técnicos">
             </form>
         <hr style="margin: 10px 0px;">
             <div>
