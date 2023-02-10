@@ -30,18 +30,7 @@ El formato y el orden de las columnas del archivo deben ser exactamente las menc
 2. Guardar Como >  formato del archivo: CSV UTF-8 (delimitado por comas).
 3. Listo !
 
-### 2° Preparacion imágenes de los técnicos
-
-![](https://siscard.com/wp-content/uploads/csv_importer_listado_imagenes.png)
-
-
-El sitio web actual permite subir imagenes con un tamaño maximo de 2Mb. Por ende se deben redimensionar para no superar dicho limite. Un sitio gratuito que puede utilizar es el de [Photopea](https://www.photopea.com/)
-1. Controlar el tamaño de las imágenes. 
-2. El nombre del archivo debe ser la zona id del técnico. Ejemplo Tecnico: Juan Peres, zona id : 1234567, nombre imagen: 1234567.png
-3. Formatos admitidos: .png .jpg
-4. Listo !
-
-### 3° Cargar Técnicos
+### 2° Cargar Técnicos
 
 ![](https://siscard.com/wp-content/uploads/csv_importer_form_tecnicos.png)
 
@@ -59,6 +48,18 @@ Completado del formulario
 ![](https://siscard.com/wp-content/uploads/csv_importer_msj_success_tecnicos.png)
 
 > El plugin debe mostrar un mensaje de success con la cantidad de técnicos cargados.
+
+### 3° Preparacion imágenes de los técnicos
+
+![](https://siscard.com/wp-content/uploads/csv_importer_listado_imagenes.png)
+
+
+El sitio web actual permite subir imagenes con un tamaño maximo de 2Mb. Por ende se deben redimensionar para no superar dicho limite. Un sitio gratuito que puede utilizar es el de [Photopea](https://www.photopea.com/)
+1. Controlar el tamaño de las imágenes. 
+2. El nombre del archivo debe ser la zona id del técnico. Ejemplo Tecnico: Juan Peres, zona id : 1234567, nombre imagen: 1234567.png
+3. Formatos admitidos: .png .jpg
+4. Listo !
+
 
 
 ### 4° Asignacion de fotos a cada Técnico
