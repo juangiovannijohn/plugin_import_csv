@@ -182,6 +182,7 @@ function csv_importer_page()
                                 
                                 $post = array(
                                     'post_title'    => $CPT_nombre,
+                                    'post_name'     => $CF_3,
                                     'post_type'     => $custom_post_type,
                                     'post_status'   => 'publish'
                                 );
