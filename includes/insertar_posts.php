@@ -33,11 +33,8 @@ function insertar_posts($datos_posts) {
             //array de posts_meta
             $posts_meta = $datos_post['posts_meta'];
             $string = $posts_meta['tecnico_dni'];
-            echo 'el dni sin recortar es: '.$string;
             $tecnico_dni = substr($string, -4);
-            echo 'el dni recortado es: '.$tecnico_dni;
             $tecnico_dni_fin = substr_replace($tecnico_dni, ".", 1, 0);
-            echo 'el dni es: '.$tecnico_dni;
             $meta_dni = [
                 'post_id' =>  $lastid,
                 'meta_key' =>  'tecnico_dni',
@@ -58,18 +55,18 @@ function insertar_posts($datos_posts) {
                 'meta_key' =>  'zona_id',
                 'meta_value' =>  $posts_meta['zona_id']
             ];
-            // var_dump($meta_dni);
-            // echo '<br>';
+
             $wpdb->insert($table_posts_meta, $meta_dni);
             $wpdb->insert($table_posts_meta,  $meta_prov);
             $wpdb->insert($table_posts_meta, $meta_foto);
             $wpdb->insert($table_posts_meta, $meta_zona);
 
-            //echo 'Valor de $sentencia: '.$sentencia;
             if ($sentencia == 1) {
                 $count++; //suma solo si se inserto correctamente
             }
         }
+
+        //si la cantidad de tecnicos subidas es igual a la cantidad de tecnicos guardadas en la base de datos es igual devuelve true
         $wpdb->query('COMMIT');
         if ($cant_tec == $count) {
             

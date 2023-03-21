@@ -189,19 +189,6 @@ function csv_importer_page()
                             if (!empty($datos_string)) {
                                 $datos = explode($delimiter, $datos_string[0]);
 
-                                // $datos_posts[] = [
-                                //     'post_author' => $user_ID,
-                                //     'comment_status' => 'closed',
-                                //     'ping_status' => 'closed',
-                                //     'post_title' => $datos[1],
-                                //     'post_name' => $datos[0],
-                                //     'post_type' => $custom_post_type,
-                                //     'post_status' => 'publish',
-                                //     'tecnico_dni' => $datos[2],
-                                //     'tecnico_zona' => $datos[3],
-                                //     'tecnico_foto' => '',
-                                //     'zona_id' =>   $datos[0],
-                                // ];
                                 $datos_posts[] = [
                                     'posts' => [
                                         'post_author' => $user_ID,
@@ -219,8 +206,7 @@ function csv_importer_page()
                                         'zona_id' =>   $datos[0],
                                         ],
                                 ];
-                                //var_dump($datos_posts);
-                                //$meta_posts[] = []; //TODO: CONTINUAR CON EL ARMADO DE META DATA
+
                                 $count = $i;
                             }
                         }
@@ -237,7 +223,7 @@ function csv_importer_page()
                             </div>';
                         } else {
 
-                            echo '<div class="error notice is-dismissible"> <p>No se pudieron actualizar correctamente los tecnicos, vuelva a intentarlo.Demora: '.$tiempo_ejecucion.'seg</p> </div>';
+                            echo '<div class="error notice is-dismissible"> <p>No se pudieron actualizar correctamente todos los tecnicos, vuelva a intentarlo. Demora: '.$tiempo_ejecucion.'seg</p> </div>';
                         }
 
 
