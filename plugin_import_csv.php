@@ -126,23 +126,6 @@ function csv_importer_page()
         $tiempo_inicio = microtime(true);
         // Get the post type from the form
         $post_type = $_POST['cpt_slug'];
-
-        // Delete all posts with the specified post type
-        $args = array(
-            'post_type' => $post_type,
-            'post_status' => 'any',
-            'numberposts' => -1
-        );
-        $posts = get_posts($args);
-        //se eliminan todos los tecnicos cargados previamente
-        foreach ($posts as $post) {
-            wp_delete_post($post->ID, true);
-        }
-        //id del usuario logueado
-        $user_ID = get_current_user_id();
-        //Creo una variable donde agregarle los post
-        $datos_posts = array();
-
         // Rest of the code for handling the CSV file and creating new posts
         $file = $_FILES['file'];
         $file_name = $file['name'];
@@ -155,6 +138,18 @@ function csv_importer_page()
         $meta_key_1 = $_POST["cf_1"]; //tecnico_dni
         $meta_key_2 = $_POST["cf_2"]; //tecnico_zona
         $meta_key_3 = $_POST["cf_3"]; //zona_id
+        
+        global $wpdb;
+        // Delete all posts with the specified post type and custom fields
+        $wpdb->query('DELETE FROM `wp_posts` WHERE post_type ="'.$post_type.'"');
+        $wpdb->query('DELETE FROM `wp_postmeta` WHERE meta_key = '.$meta_key_3.' OR meta_key = '.$meta_key_1.' OR meta_key = '.$meta_key_2.' OR meta_key = "tecnico_foto"');
+
+        //id del usuario logueado
+        $user_ID = get_current_user_id();
+        //Creo una variable donde agregarle los post
+        $datos_posts = array();
+
+
 
 
         $allowed = array('csv');

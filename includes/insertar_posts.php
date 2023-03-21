@@ -32,11 +32,16 @@ function insertar_posts($datos_posts) {
 
             //array de posts_meta
             $posts_meta = $datos_post['posts_meta'];
-            //$posts_meta = array_merge($posts_meta, [ 'post_id' => $lastid]);
+            $string = $posts_meta['tecnico_dni'];
+            echo 'el dni sin recortar es: '.$string;
+            $tecnico_dni = substr($string, -4);
+            echo 'el dni recortado es: '.$tecnico_dni;
+            $tecnico_dni_fin = substr_replace($tecnico_dni, ".", 1, 0);
+            echo 'el dni es: '.$tecnico_dni;
             $meta_dni = [
                 'post_id' =>  $lastid,
                 'meta_key' =>  'tecnico_dni',
-                'meta_value' =>  $posts_meta['tecnico_dni']
+                'meta_value' =>  $tecnico_dni_fin 
             ];
             $meta_prov = [
                 'post_id' =>  $lastid,
