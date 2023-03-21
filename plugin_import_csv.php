@@ -231,18 +231,18 @@ function csv_importer_page()
                         }
 
                         $result = insertar_posts($datos_posts);
-                        var_dump($result);
+                        
                         //Calculo de tiempo de ejecucion 
                         $tiempo_fin = microtime(true);
                         $tiempo_ejecucion = $tiempo_fin - $tiempo_inicio;
                         if ($result) {
-                            echo "La función tardó " . $tiempo_ejecucion . " segundos en ejecutarse.";
-                            echo '<div class="updated notice is-dismissible"> <p>Archivo importado correctamente!</p> 
-                        <h3> Filas afectadas=' . $count . '</h3>
-                        </div>';
+
+                            echo '<div class="updated notice is-dismissible"> <p>Archivo importado correctamente! Demora: '.$tiempo_ejecucion.'seg</p> 
+                            <h3> Filas afectadas=' . $count . '</h3>
+                            </div>';
                         } else {
-                            echo "La función tardó " . $tiempo_ejecucion . " segundos en ejecutarse.";
-                            echo '<div class="error notice is-dismissible"> <p>No se pudieron actualizar correctamente los tecnicos, vuelva a intentarlo.</p> </div>';
+
+                            echo '<div class="error notice is-dismissible"> <p>No se pudieron actualizar correctamente los tecnicos, vuelva a intentarlo.Demora: '.$tiempo_ejecucion.'seg</p> </div>';
                         }
 
 

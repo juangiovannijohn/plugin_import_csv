@@ -49,12 +49,9 @@ function agregar_img_por_zona()
       $query_tec->the_post();
 
       $post_id_tec = get_the_ID(); // 145
-      echo 'El id del tecnico que se va a agregar la img: '.$post_id_tec;
+
       $tecnicos[$post_id_tec] = get_the_title($post_id_tec); //Juan manuel rodriguez
       $zona_id_tec = get_post_meta($post_id_tec, 'zona_id', true); //2322002
-      echo 'la zona_id del tecnico es: '.$zona_id_tec;
-      echo 'el id de la imagen es:'.$attachments[$zona_id_tec];
-      echo '<br>';
       if (array_key_exists($zona_id_tec, $attachments)) {
         $post_id_imagen = $attachments[$zona_id_tec];
         update_post_meta($post_id_tec, 'tecnico_foto', $post_id_imagen); //se agrega un valor al meta_value
