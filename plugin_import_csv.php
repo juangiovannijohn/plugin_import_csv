@@ -122,6 +122,8 @@ function csv_importer_page()
     </div>
     <?php
     if (isset($_POST['submit'])) {
+        // Obtener el tiempo actual en segundos y microsegundos antes de llamar a la función
+        $tiempo_inicio = microtime(true);
         // Get the post type from the form
         $post_type = $_POST['cpt_slug'];
 
@@ -192,27 +194,54 @@ function csv_importer_page()
                             if (!empty($datos_string)) {
                                 $datos = explode($delimiter, $datos_string[0]);
 
-                                $datos_posts[] = array(
-                                    'post_author' => $user_ID,
-                                    'comment_status' => 'closed',
-                                    'ping_status' => 'closed',
-                                    'post_title' => $datos[1],
-                                    'post_name' => $datos[0],
-                                    'post_type' => $custom_post_type,
-                                    'post_status' => 'publish'
-                                );
-                                $meta_posts[] = []; //TODO: CONTINUAR CON EL ARMADO DE META DATA
+                                // $datos_posts[] = [
+                                //     'post_author' => $user_ID,
+                                //     'comment_status' => 'closed',
+                                //     'ping_status' => 'closed',
+                                //     'post_title' => $datos[1],
+                                //     'post_name' => $datos[0],
+                                //     'post_type' => $custom_post_type,
+                                //     'post_status' => 'publish',
+                                //     'tecnico_dni' => $datos[2],
+                                //     'tecnico_zona' => $datos[3],
+                                //     'tecnico_foto' => '',
+                                //     'zona_id' =>   $datos[0],
+                                // ];
+                                $datos_posts[] = [
+                                    'posts' => [
+                                        'post_author' => $user_ID,
+                                        'comment_status' => 'closed',
+                                        'ping_status' => 'closed',
+                                        'post_title' => $datos[1],
+                                        'post_name' => $datos[0],
+                                        'post_type' => $custom_post_type,
+                                        'post_status' => 'publish',
+                                        ],
+                                    'posts_meta' => [
+                                        'tecnico_dni' => $datos[2],
+                                        'tecnico_zona' => $datos[3],
+                                        'tecnico_foto' => '',
+                                        'zona_id' =>   $datos[0],
+                                        ],
+                                ];
+                                //var_dump($datos_posts);
+                                //$meta_posts[] = []; //TODO: CONTINUAR CON EL ARMADO DE META DATA
                                 $count = $i;
                             }
                         }
 
-                        $result = insertar_posts($datos_posts, $meta_posts);
+                        $result = insertar_posts($datos_posts);
                         var_dump($result);
+                        //Calculo de tiempo de ejecucion 
+                        $tiempo_fin = microtime(true);
+                        $tiempo_ejecucion = $tiempo_fin - $tiempo_inicio;
                         if ($result) {
+                            echo "La función tardó " . $tiempo_ejecucion . " segundos en ejecutarse.";
                             echo '<div class="updated notice is-dismissible"> <p>Archivo importado correctamente!</p> 
                         <h3> Filas afectadas=' . $count . '</h3>
                         </div>';
                         } else {
+                            echo "La función tardó " . $tiempo_ejecucion . " segundos en ejecutarse.";
                             echo '<div class="error notice is-dismissible"> <p>No se pudieron actualizar correctamente los tecnicos, vuelva a intentarlo.</p> </div>';
                         }
 
