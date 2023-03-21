@@ -112,6 +112,8 @@ function csv_importer_page()
 </div>
 <?php
     if (isset($_POST['submit'])) {
+        // Obtener el tiempo actual en segundos y microsegundos antes de llamar a la función
+        $tiempo_inicio = microtime(true);
         // Get the post type from the form
         $post_type = $_POST['cpt_slug'];
 
@@ -214,8 +216,13 @@ function csv_importer_page()
                             $row++;
                         }
                         fclose($handle);
+                        // Obtener el tiempo actual en segundos y microsegundos después de que la función haya terminado
+                        $tiempo_fin = microtime(true);
 
-                        echo '<div class="updated notice is-dismissible"> <p>Archivo importado correctamente!</p> 
+                        // Restar el segundo tiempo del primer tiempo para obtener la duración de la ejecución de la función
+                        $tiempo_ejecucion = $tiempo_fin - $tiempo_inicio;
+                        // Mostrar la duración de la ejecución de la función
+                        echo '<div class="updated notice is-dismissible"> <p>Archivo importado correctamente! Demora: '.$tiempo_ejecucion.'seg</p> 
                         <h3> Filas afectadas=' . $count . '</h3>
                         </div>';
                     } else {
