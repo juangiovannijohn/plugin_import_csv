@@ -63,13 +63,14 @@ function insertar_posts($datos_posts) {
 
             if ($sentencia == 1) {
                 $count++; //suma solo si se inserto correctamente
+            }else{
+                echo 'Error con:'.$posts['post_title'].'<br>';
             }
         }
 
         //si la cantidad de tecnicos subidas es igual a la cantidad de tecnicos guardadas en la base de datos es igual devuelve true
         $wpdb->query('COMMIT');
-        if ($cant_tec == $count) {
-            
+        if ($cant_tec == $count) { 
             return true;
         }else{
             return false;
