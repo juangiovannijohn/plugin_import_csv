@@ -134,7 +134,6 @@ function csv_importer_page()
         $file_error = $file['error'];
         $file_ext = explode('.', $file_name);
         $file_ext = strtolower(end($file_ext));
-        $custom_post_type = $_POST["cpt_slug"];
         $meta_key_1 = $_POST["cf_1"]; //tecnico_dni
         $meta_key_2 = $_POST["cf_2"]; //tecnico_zona
         $meta_key_3 = $_POST["cf_3"]; //zona_id
@@ -148,10 +147,6 @@ function csv_importer_page()
         $user_ID = get_current_user_id();
         //Creo una variable donde agregarle los post
         $datos_posts = array();
-
-
-
-
         $allowed = array('csv');
 
         if (in_array($file_ext, $allowed)) {
@@ -173,9 +168,24 @@ function csv_importer_page()
                         if ($commaCount > $semicolonCount) {
                             $delimiter = ',';
                         }
+
                         rewind($handle); //establecer el puntero del archivo de nuevo al principio del archivo
-                        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                            $datos_csv[] = $data;
+
+                        // Detectamos el conjunto de caracteres del archivo
+                        $fileEncoding = mb_detect_encoding(file_get_contents($file_destination), 'UTF-8, CP1252, ISO-8859-1', true);
+
+                        // Si el conjunto de caracteres detectado no es UTF-8, lo convertimos a UTF-8
+                        if ($fileEncoding !== 'UTF-8') {
+                            while (($data = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
+                                $data = array_map(function($str) use ($fileEncoding) {
+                                    return iconv($fileEncoding, 'UTF-8//IGNORE', $str);
+                                }, $data);
+                                $datos_csv[] = $data;
+                            }
+                        } else {
+                            while (($data = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
+                                $datos_csv[] = $data;
+                            }
                         }
 
                         fclose($handle);
@@ -184,26 +194,24 @@ function csv_importer_page()
                         $datos_posts = array();
                         $count = 0;
                         for ($i = 1; $i < count($datos_csv); $i++) {
-                            $datos_string = $datos_csv[$i];
-
-                            if (!empty($datos_string)) {
-                                $datos = explode($delimiter, $datos_string[0]);
+                            $datos_fila = $datos_csv[$i];
+                            if (!empty($datos_fila)) {
 
                                 $datos_posts[] = [
                                     'posts' => [
                                         'post_author' => $user_ID,
                                         'comment_status' => 'closed',
                                         'ping_status' => 'closed',
-                                        'post_title' => $datos[1],
-                                        'post_name' => $datos[0],
-                                        'post_type' => $custom_post_type,
+                                        'post_title' => $datos_fila[1],
+                                        'post_name' => $datos_fila[0],
+                                        'post_type' => $post_type,
                                         'post_status' => 'publish',
                                         ],
                                     'posts_meta' => [
-                                        'tecnico_dni' => $datos[2],
-                                        'tecnico_zona' => $datos[3],
+                                        'tecnico_dni' => $datos_fila[2],
+                                        'tecnico_zona' => $datos_fila[3],
                                         'tecnico_foto' => '',
-                                        'zona_id' =>   $datos[0],
+                                        'zona_id' =>   $datos_fila[0],
                                         ],
                                 ];
 
@@ -211,21 +219,20 @@ function csv_importer_page()
                             }
                         }
 
+                        //Se envian los datos para ser cargados en la Base de Datos
                         $result = insertar_posts($datos_posts);
                         
                         //Calculo de tiempo de ejecucion 
                         $tiempo_fin = microtime(true);
                         $tiempo_ejecucion = $tiempo_fin - $tiempo_inicio;
-                        if ($result) {
 
+                        if ($result) {
                             echo '<div class="updated notice is-dismissible"> <p>Archivo importado correctamente! Demora: '.$tiempo_ejecucion.'seg</p> 
                             <h3> Filas afectadas=' . $count . '</h3>
                             </div>';
                         } else {
-
                             echo '<div class="error notice is-dismissible"> <p>No se pudieron actualizar correctamente todos los tecnicos, vuelva a intentarlo. Demora: '.$tiempo_ejecucion.'seg</p> </div>';
                         }
-
 
                     } else {
                         echo '<div class="error notice is-dismissible"> <p>Ha ocurrido un error al procesar el archivo .csv.</p> </div>';
