@@ -140,8 +140,8 @@ function csv_importer_page()
         
         global $wpdb;
         // Delete all posts with the specified post type and custom fields
-        $wpdb->query('DELETE FROM `wp_posts` WHERE post_type ="'.$post_type.'"');
-        $wpdb->query('DELETE FROM `wp_postmeta` WHERE meta_key = '.$meta_key_3.' OR meta_key = '.$meta_key_1.' OR meta_key = '.$meta_key_2.' OR meta_key = "tecnico_foto"');
+        $wpdb->query('DELETE FROM `'.$wpdb->prefix.'posts` WHERE post_type ="'.$post_type.'"');
+        $wpdb->query('DELETE FROM `'.$wpdb->prefix.'postmeta` WHERE meta_key = '.$meta_key_3.' OR meta_key = '.$meta_key_1.' OR meta_key = '.$meta_key_2.' OR meta_key = "tecnico_foto"');
 
         //id del usuario logueado
         $user_ID = get_current_user_id();
@@ -211,7 +211,7 @@ function csv_importer_page()
                                         'tecnico_dni' => $datos_fila[2],
                                         'tecnico_zona' => $datos_fila[3],
                                         'tecnico_foto' => '',
-                                        'zona_id' =>   $datos_fila[0],
+                                        'zona_id' =>    $datos_fila[0],
                                         ],
                                 ];
 
