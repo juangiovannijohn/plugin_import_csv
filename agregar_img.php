@@ -22,7 +22,9 @@ function agregar_img_por_zona()
         ] 
         */
         $post_id = get_the_ID();
-        $file = get_post_meta($post_id, '_wp_attached_file', true);
+        $file = get_the_title();
+
+        //$file = get_post_meta($post_id, '_wp_attached_file', true);
         $zona_id = substr($file, 0, 7);
         $attachments[$zona_id] = $post_id;
       }
@@ -49,9 +51,8 @@ function agregar_img_por_zona()
       $query_tec->the_post();
 
       $post_id_tec = get_the_ID(); // 145
-
-      $tecnicos[$post_id_tec] = get_the_title($post_id_tec); //Juan manuel rodriguez
       $zona_id_tec = get_post_meta($post_id_tec, 'zona_id', true); //2322002
+      
       if (array_key_exists($zona_id_tec, $attachments)) {
         $post_id_imagen = $attachments[$zona_id_tec];
         update_post_meta($post_id_tec, 'tecnico_foto', $post_id_imagen); //se agrega un valor al meta_value

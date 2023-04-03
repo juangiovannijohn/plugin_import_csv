@@ -13,6 +13,7 @@ if (!defined('ABSPATH')) {
 }
 include_once('agregar_img.php');
 include_once('includes/insertar_posts.php');
+include_once('includes/functions.php');
 
 // Create a top-level menu item in the dashboard
 function csv_importer_menu()
@@ -122,6 +123,9 @@ function csv_importer_page()
     </div>
     <?php
     if (isset($_POST['submit'])) {
+        $current_user = wp_get_current_user();
+        $user_role = array_shift($current_user->roles); //"administrador"
+
         // Obtener el tiempo actual en segundos y microsegundos antes de llamar a la función
         $tiempo_inicio = microtime(true);
         // Get the post type from the form
@@ -141,7 +145,7 @@ function csv_importer_page()
         global $wpdb;
         // Delete all posts with the specified post type and custom fields
         $wpdb->query('DELETE FROM `'.$wpdb->prefix.'posts` WHERE post_type ="'.$post_type.'"');
-        $wpdb->query('DELETE FROM `'.$wpdb->prefix.'postmeta` WHERE meta_key = '.$meta_key_3.' OR meta_key = '.$meta_key_1.' OR meta_key = '.$meta_key_2.' OR meta_key = "tecnico_foto"');
+        $wpdb->query('DELETE FROM `'.$wpdb->prefix.'postmeta` WHERE meta_key = '.$meta_key_3.' OR meta_key = '.$meta_key_1.' OR meta_key = '.$meta_key_2.' OR meta_key = "tecnico_foto" OR meta_key = "_tecnico_foto" OR meta_key = "_'.$meta_key_3.'" OR meta_key = "_'.$meta_key_1.'" OR meta_key = "_'.$meta_key_2.'"');
 
         //id del usuario logueado
         $user_ID = get_current_user_id();
@@ -193,6 +197,10 @@ function csv_importer_page()
                         // crear un nuevo array con los datos de los posts
                         $datos_posts = array();
                         $count = 0;
+                        //DEBUG
+                        if ($user_role ==='administrator') {
+                            debug_array('TODA la info que viene del csv',$datos_csv);
+                        }
                         for ($i = 1; $i < count($datos_csv); $i++) {
                             $datos_fila = $datos_csv[$i];
                             if (!empty($datos_fila)) {
@@ -219,6 +227,11 @@ function csv_importer_page()
                             }
                         }
 
+                        //DEBUG
+                        if ($user_role ==='administrator') {
+                            echo '<h3>Debug: TODA la info de los post a cargar</h3>';
+                            var_dump($datos_posts);
+                        }
                         //Se envian los datos para ser cargados en la Base de Datos
                         $result = insertar_posts($datos_posts);
                         
