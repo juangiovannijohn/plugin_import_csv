@@ -90,6 +90,61 @@ El sitio web actual permite subir imagenes con un tamaño maximo de 2Mb. Por end
 ------------
 ------------
 
+## Carga Manual de Técnico
+### Crear nuevo técnico
+ Click en ***"My Técnicos -> Add new"***.
+
+![](https://siscard.com/wp-content/uploads/add-new.png)
+
+> Agregar Nuevo técnico .
+
+ Completar los campos marcados.
+	1. **Nombre** completo del técnico.
+	2.** DNI:** ultimos 4 digitos del dni, pero agregando un punto "." luego del primer dígito.
+	3.** Imagen:** click y seleccionar imagen previamente cargada del técnico.
+	4. **Zona ID:** ingresar Zona Id en formato numerico.
+	5. **Zona de Cobertura:** Ingresar provincias donde trabaja el técnico, en maýusculas y separadas por barra inclinida "/".
+	6. Click en **PUBLICAR**
+
+![](https://siscard.com/wp-content/uploads/add-info.png)
+
+> Agregar Información.
+
+### Corrobar la URL(Slug) del técnico.
+Es importante corrobarla ya que debe finalizar con la zona Id del tecnico. 
+Ejemplo:
+- Tecnico: Alejandro Fabián Raimondi
+- Zona ID: 5800016
+- URL: https://siscard.com/tecnicos/5800016/
+
+![](https://siscard.com/wp-content/uploads/edit-slug.png)
+
+> Corroborar y editar url.
+
+### Borrar un técnico
+Al eliminar un técnico pasa a estado "en papelera". El cual no es público sin embargo no está eliminado definitivamente.
+Si se desea eliminarlo definitivamente se debe ir a Papelera y hacer click en "eliminar definitivamente".
+
+![](https://siscard.com/wp-content/uploads/delete.png)
+
+> Eliminar técnico .
+
+### Agregar imagen y asignarla a técnico
+Click en agregar imagen.
+
+![](https://siscard.com/wp-content/uploads/add-image.png)
+
+> Agregar imagen.
+
+Luego click en editar técnico y asignarla manualmente.
+
+![](https://siscard.com/wp-content/uploads/post-add-image.png)
+
+> Editar técnico y asignarla manualmente.
+
+------------
+------------
+
 ## Instalación
 
 ### Preparacion del sitio Wordpress
