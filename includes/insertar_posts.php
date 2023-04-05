@@ -1,16 +1,17 @@
 <?php
 function insertar_posts($datos_posts) {
-    // print_r($datos_posts[0]['posts']);
-    // echo '<br>';
-    // echo '<hr>';
-    // echo '<br>';
-    // var_dump($datos_posts[0]['posts_meta']);
     global $wpdb;
 
     try {
         
         $table_posts = $wpdb->prefix.'posts';
         $table_posts_meta = $wpdb->prefix.'postmeta';
+        debug_array('Nombre de tabla POST:');
+        debug_array($table_posts);
+        debug_array('-----------------------------');
+        debug_array('Nombre de tabla POST META:');
+        debug_array($table_posts_meta);
+        debug_array('-----------------------------');
 
         $cant_tec = count($datos_posts);
         $count = 0;
@@ -55,7 +56,12 @@ function insertar_posts($datos_posts) {
             if ($sentencia == 1) {
                 $count++; //suma solo si se inserto correctamente
             }else{
-                echo 'Error con:'.$post['post_title'].'<br>';
+                debug_array('Error con:'.$post['post_title']);
+                debug_array('-----------------------------');
+                debug_array($post);
+                debug_array('-----------------------------');
+                debug_array($post_meta);
+                debug_array('-----------------------------');
             }
         }
 
@@ -63,19 +69,22 @@ function insertar_posts($datos_posts) {
         
         if ($cant_tec == $count) {
             $wpdb->query('COMMIT'); 
+            debug_array('SE REALIZO EL COMMIT DE LA TRANSACCION');
+            debug_array('-----------------------------');
             return true;
         }else{
             $wpdb->query('ROLLBACK'); 
+            debug_array('ERROR: SE REALIZO EL ROLLBACK DE LA TRANSACCION');
+            debug_array('-----------------------------');
             return false;
         }
 
     } catch (Exception $e) {
         // Si ocurre algún error, deshace los cambios
        $wpdb->query('ROLLBACK');
-       echo 'ROLLBACK';
+       debug_array('ERROR: NO SE PUDO EJECUTAR LOS QUERYS, ENTRO EN CATCH');
+       debug_array('-----------------------------');
         echo $e;
         return false; // devuelve false si hay un error
     }
-
-return false;  
 }

@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Import CSV
-Plugin URI: https://githun.com/import-csv
+Plugin URI: https://github.com/juangiovannijohn/plugin_import_csv
 Description: Este plugin permite importar un archivo CSV y crear nuevos post types.
-Version: 1.3.0
+Version: 1.4.0
 Author: iCornio Tech (Juan Giovanni John)
 Author URI: https://iCornio.com
 License: GPL2
@@ -125,6 +125,12 @@ function csv_importer_page()
     if (isset($_POST['submit'])) {
         $current_user = wp_get_current_user();
         $user_role = array_shift($current_user->roles); //"administrador"
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
+        $fecha_actual = date('d/m/Y H:i:s');
+        //DEBUG
+        debug_array('+++++++++++++++++++++++++++++++++++++++++++++++++');
+        debug_array('CARGAR TECNICO');
+        debug_array('El usuario que realizo la carga es: '.$user_role.' | '.$fecha_actual);
 
         // Obtener el tiempo actual en segundos y microsegundos antes de llamar a la función
         $tiempo_inicio = microtime(true);
@@ -198,9 +204,10 @@ function csv_importer_page()
                         $datos_posts = array();
                         $count = 0;
                         //DEBUG
-                        if ($user_role ==='administrator') {
-                            debug_array('TODA la info que viene del csv',$datos_csv);
-                        }
+                        debug_array('DATOS RECIBIDOS EN EL CSV');
+                        debug_array($datos_csv);
+                        debug_array('-----------------------------');
+                        
                         for ($i = 1; $i < count($datos_csv); $i++) {
                             $datos_fila = $datos_csv[$i];
                             if (!empty($datos_fila)) {
@@ -228,16 +235,17 @@ function csv_importer_page()
                         }
 
                         //DEBUG
-                        if ($user_role ==='administrator') {
-                            echo '<h3>Debug: TODA la info de los post a cargar</h3>';
-                            var_dump($datos_posts);
-                        }
+                        debug_array('DATOS POST PARA GUARDAR');
+                        debug_array($datos_posts);
+                        debug_array('-----------------------------');
+
                         //Se envian los datos para ser cargados en la Base de Datos
                         $result = insertar_posts($datos_posts);
                         
                         //Calculo de tiempo de ejecucion 
                         $tiempo_fin = microtime(true);
                         $tiempo_ejecucion = $tiempo_fin - $tiempo_inicio;
+                        debug_array('+++++++++++++++++++++++++++++++++++++++++++++++++');
 
                         if ($result) {
                             echo '<div class="updated notice is-dismissible"> <p>Archivo importado correctamente! Demora: '.$tiempo_ejecucion.'seg</p> 
