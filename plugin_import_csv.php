@@ -31,7 +31,13 @@ add_action('admin_menu', 'csv_importer_menu');
 
 // Display the page for the plugin
 function csv_importer_page()
-{ ?>
+{
+    //Globales
+    $current_user = wp_get_current_user();
+    $user_role = array_shift($current_user->roles); //"administrador"
+    date_default_timezone_set('America/Argentina/Buenos_Aires');
+    $fecha_actual = date('d/m/Y H:i:s');
+     ?>
     <style>
         * {
             margin: 0px;
@@ -113,6 +119,22 @@ function csv_importer_page()
                         } ?>
                     </div>
                 </div>
+                <?php if ($user_role == 'administrator') {?>
+                <hr style="margin: 10px 0px;">
+                <div>
+                    <h3>Descargar logs</h3>
+                    <form method="post">
+                        <input type="hidden">
+                        <button class="button button-secondary" type="submit" name="descargar-logs">Descargar</button>
+                    </form>
+                    <div>
+                        <?php
+                        if (isset($_POST['descargar-logs'])) {
+                            descargar_archivo();
+                        } ?>
+                    </div>
+                </div>
+                <?php } ?>
             </div>
             <div class="col col_img">
                 <h3>Ejemplo del archivo</h3>
@@ -123,14 +145,11 @@ function csv_importer_page()
     </div>
     <?php
     if (isset($_POST['submit'])) {
-        $current_user = wp_get_current_user();
-        $user_role = array_shift($current_user->roles); //"administrador"
-        date_default_timezone_set('America/Argentina/Buenos_Aires');
-        $fecha_actual = date('d/m/Y H:i:s');
+
         //DEBUG
-        debug_array('+++++++++++++++++++++++++++++++++++++++++++++++++');
-        debug_array('CARGAR TECNICO');
-        debug_array('El usuario que realizo la carga es: '.$user_role.' | '.$fecha_actual);
+        debug_array('+++++++++++++++++++++++++++++++++++++++++++++++++<br>');
+        debug_array('CARGAR TECNICO<br>');
+        debug_array('El usuario que realizo la carga es: '.$user_role.' | '.$fecha_actual.'<br>');
 
         // Obtener el tiempo actual en segundos y microsegundos antes de llamar a la función
         $tiempo_inicio = microtime(true);
@@ -204,9 +223,9 @@ function csv_importer_page()
                         $datos_posts = array();
                         $count = 0;
                         //DEBUG
-                        debug_array('DATOS RECIBIDOS EN EL CSV');
+                        debug_array('DATOS RECIBIDOS EN EL CSV<br>');
                         debug_array($datos_csv);
-                        debug_array('-----------------------------');
+                        debug_array('<br> ----------------------------- <br>');
                         
                         for ($i = 1; $i < count($datos_csv); $i++) {
                             $datos_fila = $datos_csv[$i];
@@ -235,9 +254,9 @@ function csv_importer_page()
                         }
 
                         //DEBUG
-                        debug_array('DATOS POST PARA GUARDAR');
+                        debug_array('DATOS POST PARA GUARDAR<br>');
                         debug_array($datos_posts);
-                        debug_array('-----------------------------');
+                        debug_array('<br>-----------------------------<br>');
 
                         //Se envian los datos para ser cargados en la Base de Datos
                         $result = insertar_posts($datos_posts);
@@ -245,7 +264,7 @@ function csv_importer_page()
                         //Calculo de tiempo de ejecucion 
                         $tiempo_fin = microtime(true);
                         $tiempo_ejecucion = $tiempo_fin - $tiempo_inicio;
-                        debug_array('+++++++++++++++++++++++++++++++++++++++++++++++++');
+                        debug_array('<br>+++++++++++++++++++++++++++++++++++++++++++++++++<br>');
 
                         if ($result) {
                             echo '<div class="updated notice is-dismissible"> <p>Archivo importado correctamente! Demora: '.$tiempo_ejecucion.'seg</p> 

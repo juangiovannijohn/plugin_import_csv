@@ -11,3 +11,16 @@ function debug_array($array){
     // Cierra el archivo
     fclose($archivo);
 }
+
+function descargar_archivo() {
+    // Habilitar el buffer de salida
+    ob_start();
+    // Ruta y nombre del archivo
+    $dir = plugin_dir_url(__FILE__) . 'logs/log.txt';
+    // Vaciar el buffer de salida
+    ob_clean();
+    // Leer y descargar el archivo
+    readfile($dir);
+}
+
+
